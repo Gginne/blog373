@@ -7,21 +7,85 @@ use Livewire\Component;
 
 class Post extends Component
 {
-    public $posts, $title, $body, $post_id;
+    public $posts, $title, $body, $post_id, $current_post;
+    public $isOpen = 0;
 
     public function mount($id=false)
     {
-        $this->post_id = $id;
+        $this->current_post = $id;
 
     }
     public function render()
     {
-        if(is_numeric($this->post_id)){
-            $this->posts = \App\Models\Post::where('user_id', Auth::user()->id)
-                ->where('id', '=', $this->post_id)
-                ->get();
-            return view('livewire.post');
-        }
+
+        $this->posts = \App\Models\Post::where('user_id', Auth::user()->id)
+            ->where('id', '=', $this->current_post)
+            ->get();
+        return view('livewire.post');
 
     }
+
+    public function openModal()
+    {
+        $this->isOpen = true;
+    }
+
+
+    public function closeModal()
+    {
+        $this->isOpen = false;
+    }
+
+    private function resetInputFields(){
+        $this->title = '';
+        $this->body = '';
+        $this->post_id = '';
+    }
+
+    public function store()
+    {
+        $this->validate([
+            'title' => 'required',
+            'body' => 'required',
+        ]);
+
+        \App\Models\Post::updateOrCreate(['id' => $this->post_id], [
+            'title' => $this->title,
+            'body' => $this->body,
+            'user_id' => Auth::user()->id
+        ]);
+
+        session()->flash('message',
+            $this->post_id ? 'Post Updated Successfully.' : 'Post Created Successfully.');
+
+        $this->closeModal();
+        $this->resetInputFields();
+    }
+    /**
+     * The attributes that are mass assignable.
+     *
+     * @var array
+     */
+    public function edit($id)
+    {
+        $post = \App\Models\Post::findOrFail($id);
+        $this->post_id = $id;
+        $this->title = $post->title;
+        $this->body = $post->body;
+
+        $this->openModal();
+    }
+
+    /**
+     * The attributes that are mass assignable.
+     *
+     * @var array
+     */
+    public function delete($id)
+    {
+        \App\Models\Post::find($id)->delete();
+        session()->flash('message', 'Post Deleted Successfully.');
+        redirect('/posts');
+    }
+
 }
