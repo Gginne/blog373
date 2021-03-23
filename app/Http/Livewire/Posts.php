@@ -23,7 +23,6 @@ class Posts extends Component
     {
         if($this->post_id){
             $this->posts = Post::where('user_id', Auth::user()->id)
-                ->where('title', 'like', '%' . $this->title_filter. '%')
                 ->where('id', '=', $this->post_id)
                 ->get();
             return view('livewire.post');
