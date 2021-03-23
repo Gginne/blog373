@@ -15,16 +15,26 @@ class Posts extends Component
 
     public function mount($id=false)
     {
-
+       $this->post_id = $id;
 
     }
 
     public function render()
     {
-        $this->posts = Post::where('user_id', Auth::user()->id)
-            ->where('title', 'like', '%' . $this->title_filter. '%')
-            ->get();
-        return view('livewire.posts');
+        if($this->post_id){
+            $this->posts = Post::where('user_id', Auth::user()->id)
+                ->where('title', 'like', '%' . $this->title_filter. '%')
+                ->where('id', '=', $this->post_id)
+                ->get();
+            return view('livewire.post');
+        } else {
+            $this->posts = Post::where('user_id', Auth::user()->id)
+                ->where('title', 'like', '%' . $this->title_filter. '%')
+                ->get();
+            return view('livewire.posts');
+        }
+
+
     }
 
     public function create()
