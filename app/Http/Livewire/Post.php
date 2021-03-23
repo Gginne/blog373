@@ -18,8 +18,7 @@ class Post extends Component
     public function render()
     {
 
-        $this->posts = \App\Models\Post::where('user_id', Auth::user()->id)
-            ->where('id', '=', $this->current_post)
+        $this->posts = \App\Models\Post::where('id', '=', $this->current_post)
             ->get();
         return view('livewire.post');
 

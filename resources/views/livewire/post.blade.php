@@ -18,10 +18,12 @@
             @if($isOpen)
                 @include('livewire.create')
             @endif
-            <div class="float-right">
-                <button wire:click="edit({{ $posts[0]->id }})" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">Edit</button>
-                <button wire:click="delete({{ $posts[0]->id }})" class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded">Delete</button>
-            </div>
+            @if (Auth::user()->id == $posts[0]->user_id  )
+                <div class="float-right">
+                    <button wire:click="edit({{ $posts[0]->id }})" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">Edit</button>
+                    <button wire:click="delete({{ $posts[0]->id }})" class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded">Delete</button>
+                </div>
+            @endif
 
             <h1 class="text-5xl mb-3">{{ $posts[0]->title }}</h1>
 
