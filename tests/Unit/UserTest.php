@@ -6,14 +6,14 @@ use App\Models\Page;
 use App\Models\User;
 use PHPUnit\Framework\TestCase;
 
-class ExampleTest extends TestCase
+class UserTest extends TestCase
 {
     /**
-     * A basic test example.
+     * A basic unit test example.
      *
      * @return void
      */
-    public function testBasicTest()
+    public function test_user_page()
     {
 
         $this->assertTrue(true);
