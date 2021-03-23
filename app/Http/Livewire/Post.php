@@ -7,7 +7,7 @@ use Livewire\Component;
 
 class Post extends Component
 {
-    public $posts, $title, $body, $post_id, $current_post;
+    public $posts, $title, $body, $published, $post_id, $current_post;
     public $isOpen = 0;
 
     public function mount($id=false)
@@ -39,6 +39,7 @@ class Post extends Component
     private function resetInputFields(){
         $this->title = '';
         $this->body = '';
+        $this->published = '1';
         $this->post_id = '';
     }
 
@@ -47,11 +48,13 @@ class Post extends Component
         $this->validate([
             'title' => 'required',
             'body' => 'required',
+            'published' => 'required'
         ]);
 
         \App\Models\Post::updateOrCreate(['id' => $this->post_id], [
             'title' => $this->title,
             'body' => $this->body,
+            'published' => $this->published,
             'user_id' => Auth::user()->id
         ]);
 

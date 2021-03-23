@@ -9,7 +9,7 @@ use Illuminate\Support\Facades\Auth;
 
 class Posts extends Component
 {
-    public $posts, $title, $body, $post_id;
+    public $posts, $title, $body, $published, $post_id;
     public $title_filter;
     public $isOpen = 0;
 
@@ -49,11 +49,13 @@ class Posts extends Component
         $this->validate([
             'title' => 'required',
             'body' => 'required',
+            'published' => 'required'
         ]);
 
         Post::updateOrCreate(['id' => $this->post_id], [
             'title' => $this->title,
             'body' => $this->body,
+            'published' => $this->published,
             'user_id' => Auth::user()->id
         ]);
 
@@ -74,6 +76,7 @@ class Posts extends Component
         $this->post_id = $id;
         $this->title = $post->title;
         $this->body = $post->body;
+        $this->published = $post->published;
 
         $this->openModal();
     }

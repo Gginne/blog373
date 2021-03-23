@@ -22,6 +22,17 @@
                             <textarea class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="exampleFormControlInput2" wire:model="body" placeholder="Enter Body"></textarea>
                             @error('body') <span class="text-red-500">{{ $message }}</span>@enderror
                         </div>
+                        <div class="mb-4">
+                            <label class="inline-flex items-center">
+                                <input type="radio" class="form-radio" wire:model="published" name="published" value="1">
+                                <span class="ml-2">Published</span>
+                            </label>
+                            <label class="inline-flex items-center ml-6">
+                                <input type="radio" class="form-radio" wire:model="published" name="published" value="0">
+                                <span class="ml-2">Not Published</span>
+                            </label>
+                            @error('published') <span class="text-red-500">{{ $message }}</span>@enderror
+                        </div>
                     </div>
                 </div>
 
