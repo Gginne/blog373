@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Livewire\Posts;
+use App\Http\Livewire\Post;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -19,4 +20,4 @@ Route::get('/', function () {
 });
 
 Route::middleware(['auth:sanctum', 'verified'])->get('posts', Posts::class)->name('posts');
-Route::middleware(['auth:sanctum', 'verified'])->get('posts/{id}', Posts::class);
+Route::middleware(['auth:sanctum', 'verified'])->get('posts/{id}', Post::class);
