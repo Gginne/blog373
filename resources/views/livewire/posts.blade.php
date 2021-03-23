@@ -20,8 +20,19 @@
                 @include('livewire.create')
             @endif
             <div class="float-right">
+                <span class="mr-3 d-inline">
+                    <label class="inline-flex items-center">
+                        <input type="radio" class="form-radio" wire:model="viewAll" value="0">
+                        <span class="ml-2">My Posts</span>
+                    </label>
+                    <label class="inline-flex items-center ml-6">
+                        <input type="radio" class="form-radio" wire:model="viewAll" value="1">
+                        <span class="ml-2">All Posts</span>
+                    </label>
+                </span>
                 <input type="text" wire:model="title_filter" placeholder="Search by Title">
             </div>
+
             <table class="table-fixed w-full">
                 <thead>
                 <tr class="bg-gray-100">
@@ -39,7 +50,7 @@
                         <td class="border px-4 py-2 overflow-ellipsis truncate ">{{ $post->title }}</td>
                         <td class="border px-4 py-2 overflow-ellipsis truncate">{{ $post->body }}</td>
                         <td class="border px-4 py-2">
-                            <a class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded" href="/posts/{{ $post->id }}">View</a>
+                            <button class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded"><a href="/posts/{{ $post->id }}">View</a></button>
                             @if (Auth::user()->id == $post->user_id  )
                                 <button wire:click="delete({{ $post->id }})" class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded">Delete</button>
                             @endif
