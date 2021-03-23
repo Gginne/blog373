@@ -3,6 +3,7 @@
 namespace Database\Factories;
 
 use App\Models\Page;
+use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 class PageFactory extends Factory
@@ -22,7 +23,10 @@ class PageFactory extends Factory
     public function definition()
     {
         return [
-            //
+            "title" => $this->faker->sentence,
+            "body" => $this->faker->sentence,
+            "published" => "1",
+            "user_id" => User::factory()
         ];
     }
 }
